@@ -1,0 +1,6 @@
+# Forzar a Git a manejar los saltos de línea automáticamente
+* text=auto
+
+# Asegurar que el wrapper de Maven siempre tenga formato Linux (LF)
+mvnw text eol=lf
+
