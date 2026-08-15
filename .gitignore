@@ -1,0 +1,11 @@
+# Dependencias de React (Frontend)
+frontend/node_modules/
+frontend/build/
+
+# Compilados de Spring Boot (Backend)
+backend/target/
+backend/*.jar
+
+# Variables de entorno y configuraciones locales
+.env
+

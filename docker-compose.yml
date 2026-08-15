@@ -1,0 +1,72 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
+    environment:
+      POSTGRES_DB: portafolio_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:${DB_PORT}:5432"
+    networks:
+      - portafolio-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/portafolio_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
+    ports:
+      - "127.0.0.1:${APP_PORT}:8080"
+    volumes:
+      - ./backend:/app
+      - ~/.m2:/root/.m2
+    networks:
+      - portafolio-network
+    restart: unless-stopped
+
+  app-front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-front
+    depends_on:
+      - app
+    environment:
+      # URL dinámica del backend (aislada y segura dentro del servidor)
+      - VITE_API_URL=http://localhost:${APP_PORT}
+    ports:
+      # Blindaje Zero Trust: Exposición restringida solo al entorno local
+      - "127.0.0.1:${FRONT_PORT}:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Protege las dependencias de Linux
+    networks:
+      - portafolio-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    name: ${COMPOSE_PROJECT_NAME}_postgres_data
+
+networks:
+  portafolio-network:
+    name: ${COMPOSE_PROJECT_NAME}_portafolio-network
+    driver: bridge
+
