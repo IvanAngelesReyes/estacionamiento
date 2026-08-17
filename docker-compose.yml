@@ -41,25 +41,22 @@ services:
       - estacionamiento-network
     restart: unless-stopped
 
-  # app-front:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   container_name: ${COMPOSE_PROJECT_NAME}-front
-  #   depends_on:
-  #     - app
-  #   environment:
-  #     # URL dinámica del backend (aislada y segura dentro del servidor)
-  #     - VITE_API_URL=http://localhost:${APP_PORT}
-  #   ports:
-  #     # Blindaje Zero Trust: Exposición restringida solo al entorno local
-  #     - "127.0.0.1:${FRONT_PORT}:5173"
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules # Protege las dependencias de Linux
-  #   networks:
-  #     - estacionamiento-network
-  #   restart: unless-stopped
+  app-front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-front
+    depends_on:
+      - app
+    environment:
+      # URL dinámica del backend (aislada y segura dentro del servidor)
+      - VITE_API_URL=http://localhost:${APP_PORT}
+    ports:
+      # Blindaje Zero Trust: Exposición restringida solo al entorno local
+      - "127.0.0.1:${FRONT_PORT}:4200"
+    networks:
+      - estacionamiento-network
+    restart: unless-stopped
 
 volumes:
   postgres_data:

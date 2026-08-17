@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,36 +32,45 @@ public class VehiculoController {
     @Operation(summary = "Alta de vehiculos oficiales")
     @ApiResponse(responseCode = "201", description = "Vehiculo oficial dado de alta correctamente")
     @PostMapping("/vehiculos/oficiales")
-    public ResponseEntity<VehiculoGetDTO> crearVehiculoOficial(@Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
+    public ResponseEntity<VehiculoGetDTO> crearVehiculoOficial(
+            @Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoService.crearVehiculoOficial(vehiculoCreateDTO));
     }
 
     @Operation(summary = "Alta de vehiculos residentes")
     @ApiResponse(responseCode = "201", description = "Vehiculo residente dado de alta correctamente")
     @PostMapping("/vehiculos/residentes")
-    public ResponseEntity<VehiculoGetDTO> crearVehiculoResidente(@Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoService.crearVehiculoResidente(vehiculoCreateDTO));
+    public ResponseEntity<VehiculoGetDTO> crearVehiculoResidente(
+            @Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(vehiculoService.crearVehiculoResidente(vehiculoCreateDTO));
     }
 
     @Operation(summary = "Alta de vehiculos no residentes")
     @ApiResponse(responseCode = "201", description = "Vehiculo no residente dado de alta correctamente")
     @PostMapping("/vehiculos/no-residentes")
-    public ResponseEntity<VehiculoGetDTO> crearVehiculoNoResidente(@Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoService.crearVehiculoNoResidente(vehiculoCreateDTO));
+    public ResponseEntity<VehiculoGetDTO> crearVehiculoNoResidente(
+            @Valid @RequestBody VehiculoCreateDTO vehiculoCreateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(vehiculoService.crearVehiculoNoResidente(vehiculoCreateDTO));
     }
 
     @Operation(summary = "Registrar entrada de vehículo")
     @ApiResponse(responseCode = "201", description = "Vehiculo registrado correctamente")
     @PostMapping("/estancias/entrada")
-    public ResponseEntity<VehiculoGetDTO> registrarEntradaVehiculo(@Valid @RequestBody EntradaVehiculoDTO entradaVehiculoDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoService.registrarEntradaVehiculo(entradaVehiculoDTO));
+    public ResponseEntity<VehiculoGetDTO> registrarEntradaVehiculo(
+            @Valid @RequestBody EntradaVehiculoDTO entradaVehiculoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(vehiculoService.registrarEntradaVehiculo(entradaVehiculoDTO));
     }
 
     @Operation(summary = "Registrar salida de vehículo")
     @ApiResponse(responseCode = "201", description = "Vehiculo registrado correctamente")
     @PostMapping("/estancias/salida")
-    public ResponseEntity<VehiculoSalidaDTO> registrarSalidaVehiculo(@Valid @RequestBody EntradaVehiculoDTO entradaVehiculoDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehiculoService.registrarSalidaVehiculo(entradaVehiculoDTO));
+    public ResponseEntity<VehiculoSalidaDTO> registrarSalidaVehiculo(
+            @Valid @RequestBody EntradaVehiculoDTO entradaVehiculoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(vehiculoService.registrarSalidaVehiculo(entradaVehiculoDTO));
     }
 
     @Operation(summary = "Generar informe de pagos")
@@ -76,6 +86,22 @@ public class VehiculoController {
     public ResponseEntity<String> reiniciarMes() {
         vehiculoService.reiniciarMes();
         return ResponseEntity.ok("Mes reiniciado exitosamente. Se han reseteado los tiempos y estancias.");
+    }
+
+    @Operation(summary = "Listar todos los vehículos")
+    @ApiResponse(responseCode = "200", description = "Lista de vehículos obtenida correctamente")
+    @GetMapping("/vehiculos")
+    public ResponseEntity<List<VehiculoGetDTO>> listarVehiculos() {
+        List<VehiculoGetDTO> vehiculos = vehiculoService.listarVehiculos();
+        return ResponseEntity.ok(vehiculos);
+    }
+
+    @Operation(summary = "Procesar pago de un vehículo")
+    @ApiResponse(responseCode = "200", description = "Pago procesado y guardado en base de datos correctamente")
+    @PostMapping("/vehiculos/{placa}/pagar")
+    public ResponseEntity<String> procesarPago(@PathVariable String placa) {
+        vehiculoService.procesarPago(placa);
+        return ResponseEntity.ok("Pago procesado exitosamente en BD");
     }
 
 }
