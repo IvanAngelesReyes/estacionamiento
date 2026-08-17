@@ -16,10 +16,6 @@ Ejecuta el siguiente comando para descargar el proyecto:
 git clone https://github.com/IvanAngelesReyes/estacionamiento.git
 cd estacionamiento
 ```
-** IMPORTANTE:** Una vez descargado el proyecto, es fundamental moverte a la rama `developer`, ya que es la que tiene todos los cambios y características más recientes:
-```bash
-git checkout developer
-```
 
 ### 2. Configurar variables de entorno (.env)
 Crea un archivo llamado `.env` en la raíz del proyecto (al mismo nivel que `docker-compose.yml`) y pega la siguiente configuración exacta:
