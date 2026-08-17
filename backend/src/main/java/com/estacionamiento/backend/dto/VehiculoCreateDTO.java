@@ -1,7 +1,8 @@
 package com.estacionamiento.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -14,6 +15,6 @@ public class VehiculoCreateDTO {
     private String modelo;
     @NotBlank(message = "El color es obligatorio")
     private String color;
-    @NotNull(message = "El tipo de vehículo es obligatorio")
+    @JsonIgnore
     private Integer tipoVehiculoId;
 }

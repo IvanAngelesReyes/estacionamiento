@@ -19,14 +19,17 @@ public class DataInitializer {
                 TipoVehiculo residente = new TipoVehiculo();
                 residente.setNombre("Oficial");
                 residente.setDescripcion("Vehículos oficiales no pagan.");
-
+                residente.setTarifaMinutoDouble(0.0);
+                
                 TipoVehiculo visitante = new TipoVehiculo();
                 visitante.setNombre("Residente");
                 visitante.setDescripcion("Residentes pagan $0.05/minuto (acumulado).");
+                visitante.setTarifaMinutoDouble(0.05);
 
                 TipoVehiculo proveedor = new TipoVehiculo();
                 proveedor.setNombre("No Residente");
                 proveedor.setDescripcion("No residentes pagan $0.5/minuto al salir.");
+                proveedor.setTarifaMinutoDouble(0.5);
 
                 tipoVehiculoRepository.saveAll(List.of(residente, visitante, proveedor));
                 

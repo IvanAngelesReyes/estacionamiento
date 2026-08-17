@@ -18,6 +18,7 @@ public class TipoVehiculo extends BaseEntity {
     
     private String nombre;
     private String descripcion;
+    private Double tarifaMinutoDouble;
 
     @OneToMany(mappedBy = "tipoVehiculo")
     @ToString.Exclude

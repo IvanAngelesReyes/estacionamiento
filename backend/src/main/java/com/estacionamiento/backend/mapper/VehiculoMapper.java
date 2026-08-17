@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.estacionamiento.backend.dto.VehiculoCreateDTO;
 import com.estacionamiento.backend.dto.VehiculoGetDTO;
+import com.estacionamiento.backend.dto.VehiculoSalidaDTO;
+import com.estacionamiento.backend.entity.Bitacora;
 import com.estacionamiento.backend.entity.TipoVehiculo;
 import com.estacionamiento.backend.entity.Vehiculo;
 import com.estacionamiento.backend.repository.TipoVehiculoRepository;
@@ -37,4 +39,8 @@ public abstract class VehiculoMapper {
 
         return tipoVehiculoRepository.getReferenceById(id); 
     }
+
+    @Mapping(target = "placa", source = "vehiculo.placa")
+    @Mapping(target = "costoTotal", source = "bitacora.costoTotal")
+    public abstract VehiculoSalidaDTO toSalidaDTO(Vehiculo vehiculo, Bitacora bitacora);
 }
