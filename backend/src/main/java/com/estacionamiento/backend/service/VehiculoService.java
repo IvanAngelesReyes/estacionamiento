@@ -16,4 +16,6 @@ public interface VehiculoService {
     VehiculoGetDTO crearVehiculoNoResidente(VehiculoCreateDTO vehiculoCreateDTO);  
     List<BitacoraDTO> generarInformePagos(); 
     void reiniciarMes();
+    List<VehiculoGetDTO> listarVehiculos();
+    void procesarPago(String placa);
 }

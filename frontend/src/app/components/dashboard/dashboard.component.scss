@@ -1,0 +1,17 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+.button-row {
+  display: flex;
+  gap: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}

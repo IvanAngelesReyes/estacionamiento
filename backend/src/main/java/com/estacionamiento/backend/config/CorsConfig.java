@@ -10,8 +10,7 @@ public class CorsConfig implements WebMvcConfigurer{
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                    "https://pre-api.bushcode.site", 
-                    "https://api.bushcode.site",
+                    "https://pre-api-estacionamiento.bushcode.site",
                     "http://localhost:5173"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
